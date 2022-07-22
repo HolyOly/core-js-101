@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-concat */
 /* *******************************************************************************************
  *                                                                                           *
  * Please read the following tutorial before implementing tasks:                              *
@@ -165,8 +166,9 @@ function unbracketTag(str) {
  *   'Thunderstruck' => 'THUNDERSTRUCK'
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
-function convertToUpperCase(/* str */) {
-  throw new Error('Not implemented');
+function convertToUpperCase(str) {
+  // throw new Error('Not implemented');
+  return str.toUpperCase();
 }
 
 /**
@@ -184,8 +186,9 @@ function convertToUpperCase(/* str */) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  // throw new Error('Not implemented');
+  return str.split(';');
 }
 
 /**
@@ -211,8 +214,14 @@ function extractEmails(/* str */) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  // eslint-disable-next-line prefer-template
+  const topLine = '┌' + '─'.repeat(width - 2) + '┐\n';
+  // eslint-disable-next-line prefer-template
+  const middleLine = '│' + ' '.repeat(width - 2) + '│\n';
+  // eslint-disable-next-line prefer-template
+  const downLine = '└' + '─'.repeat(width - 2) + '┘\n';
+  return topLine + middleLine.repeat(height - 2) + downLine;
 }
 
 
@@ -232,8 +241,29 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const arrOfStr = str.split('');
+  const result = [];
+  for (let i = 0; i < arrOfStr.length; i += 1) {
+    if (arrOfStr[i].charCodeAt() >= 97 && arrOfStr[i].charCodeAt() <= 109) {
+      result.push(arrOfStr[i].charCodeAt() + 13);
+    } else if (arrOfStr[i].charCodeAt() >= 110 && arrOfStr[i].charCodeAt() <= 122) {
+      result.push(arrOfStr[i].charCodeAt() - 13);
+    } else if (arrOfStr[i].charCodeAt() >= 65 && arrOfStr[i].charCodeAt() <= 77) {
+      result.push(arrOfStr[i].charCodeAt() + 13);
+    } else if (arrOfStr[i].charCodeAt() >= 78 && arrOfStr[i].charCodeAt() <= 90) {
+      result.push(arrOfStr[i].charCodeAt() - 13);
+    } else {
+      result.push(arrOfStr[i]);
+    }
+  }
+  for (let i = 0; i < result.length; i += 1) {
+    if (typeof result[i] === 'number') {
+      result[i] = String.fromCharCode(result[i]);
+    }
+  }
+  return result.join('');
+  // throw new Error('Not implemented');
 }
 
 /**
@@ -249,8 +279,13 @@ function encodeToRot13(/* str */) {
  *   isString('test') => true
  *   isString(new String('test')) => true
  */
-function isString(/* value */) {
-  throw new Error('Not implemented');
+// eslint-disable-next-line consistent-return
+function isString(value) {
+  // throw new Error('Not implemented');
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -278,8 +313,15 @@ function isString(/* value */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const arr = [
+    'A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+  return arr.indexOf(value);
+  // throw new Error('Not implemented');
 }
 
 
