@@ -422,11 +422,7 @@ function getFalsyValuesCount(arr) {
 function findAllOccurrences(arr, item) {
   // throw new Error('Not implemented');
   let count = 0;
-  arr.map((el) => {
-    if (item === el) {
-      count += 1;
-    }
-  });
+  arr.map((el) => (item === el ? count += 1 : count));
   return count;
 }
 
@@ -589,15 +585,10 @@ function distinct(arr) {
  */
 function group(array, keySelector, valueSelector) {
   // throw new Error('Not implemented');
-  const collection = new Map();
-  array.map((x) => {
-    if (collection.has(keySelector(x))) {
-      collection.get(keySelector(x)).push(valueSelector(x));
-    } else {
-      collection.set(keySelector(x), [valueSelector(x)]);
-    }
-  });
-  return collection;
+  const coll = new Map();
+  array.map((x) => (coll.has(keySelector(x)) ? coll.get(keySelector(x)).push(valueSelector(x))
+    : coll.set(keySelector(x), [valueSelector(x)])));
+  return coll;
 }
 
 

@@ -30,10 +30,16 @@
 function getFizzBuzz(num) {
   // throw new Error('Not implemented');
   // let res = '';
-  return (num % 3 === 0 && num % 5 === 0) ? 'FizzBuzz'
-    : num % 3 === 0 ? 'Fizz'
-      : num % 5 === 0 ? 'Buzz'
-        : num;
+  if (num % 3 === 0 && num % 5 === 0) {
+    return 'FizzBuzz';
+  }
+  if (num % 3 === 0) {
+    return 'Fizz';
+  }
+  if (num % 5 === 0) {
+    return 'Buzz';
+  }
+  return num;
 }
 
 
@@ -198,9 +204,9 @@ function findFirstSingleChar(str) {
     return acc;
   }, {});
 
-  for (const prop in arrOfStr) {
-    if (arrOfStr[prop] === 1) {
-      arr.push(prop);
+  for (let i = 0; i < Object.entries(arrOfStr).length; i += 1) {
+    if (Object.entries(arrOfStr)[i][1] === 1) {
+      arr.push(Object.entries(arrOfStr)[i][0]);
     }
   }
   for (let i = 0; i < arr.length; i += 1) {
@@ -311,15 +317,16 @@ function reverseInteger(num) {
 // eslint-disable-next-line consistent-return
 function isCreditCardNumber(ccn) {
   // throw new Error('Not implemented');
-  ccn = [...String(ccn)].reverse();
-  ccn = ccn.reduce((sum, val, ind) => {
+  // let ccnNew = [...String(ccn)].reverse();
+  const ccnNew = [...String(ccn)].reverse().reduce((sum, val, ind) => {
     let dig = Number(val);
     if (ind % 2) dig *= 2;
-    sum += Math.floor(dig / 10);
-    sum += dig % 10;
-    return sum;
+    let sumS = sum;
+    sumS += Math.floor(dig / 10);
+    sumS += dig % 10;
+    return sumS;
   }, 0);
-  return (ccn * 3) % 10 === 0;
+  return (ccnNew * 3) % 10 === 0;
 }
 
 /**
