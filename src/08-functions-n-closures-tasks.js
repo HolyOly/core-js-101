@@ -23,8 +23,9 @@
  *   getComposition(Math.sin, Math.asin)(x) => Math.sin(Math.asin(x))
  *
  */
-function getComposition(/* f, g */) {
-  throw new Error('Not implemented');
+function getComposition(f, g) {
+  // throw new Error('Not implemented');
+  return (x) => f(g(x));
 }
 
 
@@ -44,8 +45,9 @@ function getComposition(/* f, g */) {
  *   power05(16) => 4
  *
  */
-function getPowerFunction(/* exponent */) {
-  throw new Error('Not implemented');
+function getPowerFunction(exponent) {
+  // throw new Error('Not implemented');
+  return (x) => (x ** exponent);
 }
 
 
@@ -63,7 +65,14 @@ function getPowerFunction(/* exponent */) {
  *   getPolynom()      => null
  */
 function getPolynom() {
-  throw new Error('Not implemented');
+  // throw new Error('Not implemented');
+  // eslint-disable-next-line prefer-rest-params
+  const arr = Array.prototype.slice.call(arguments).reverse();
+  // eslint-disable-next-line func-names
+  const polynom = function (x) {
+    return arr.reduceRight((acc, v, i) => acc + v * (x ** i), 0);
+  };
+  return polynom;
 }
 
 
@@ -129,8 +138,20 @@ function retry(/* func, attempts */) {
  * cos(3.141592653589793) ends
  *
  */
-function logger(/* func, logFunc */) {
-  throw new Error('Not implemented');
+function logger(func, logFunc) {
+  // throw new Error('Not implemented');
+  // eslint-disable-next-line func-names
+  return function () {
+    // eslint-disable-next-line prefer-rest-params
+    let argsStr = JSON.stringify(Array.from(arguments)).slice(1, -1);
+    logFunc(`${func.name}(${argsStr}) starts`);
+    // eslint-disable-next-line prefer-spread, prefer-rest-params
+    const ret = func.apply(null, arguments);
+    // eslint-disable-next-line prefer-rest-params
+    argsStr = JSON.stringify(Array.from(arguments)).slice(1, -1);
+    logFunc(`${func.name}(${argsStr}) ends`);
+    return ret;
+  };
 }
 
 
@@ -147,8 +168,15 @@ function logger(/* func, logFunc */) {
  *   partialUsingArguments(fn, 'a','b','c')('d') => 'abcd'
  *   partialUsingArguments(fn, 'a','b','c','d')() => 'abcd'
  */
-function partialUsingArguments(/* fn, ...args1 */) {
-  throw new Error('Not implemented');
+function partialUsingArguments(fn) {
+  // throw new Error('Not implemented');
+  // eslint-disable-next-line prefer-rest-params
+  let args = Array.from(arguments).slice(1);
+  return function f() {
+    // eslint-disable-next-line prefer-rest-params
+    args = args.concat(Array.from(arguments));
+    return fn.apply(this, args);
+  };
 }
 
 
@@ -171,6 +199,7 @@ function partialUsingArguments(/* fn, ...args1 */) {
  */
 function getIdGeneratorFunction(/* startFrom */) {
   throw new Error('Not implemented');
+  // eslint-disable-next-line func-names, arrow-body-style
 }
 
 

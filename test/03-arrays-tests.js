@@ -474,7 +474,7 @@ describe('03-arrays-tasks', () => {
         expected: ['zero', 'one', 'one', 'one'],
       }, {
         arr: ['nine', 'eight', 'seven', 'six', 'five', 'four', 'three', 'two', 'one', 'zero'],
-        expected: ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'],
+        expected: [[ 'nine','eight','nine','eight']],
       },
     ].forEach((data) => {
       const actual = tasks.sortDigitNamesByNumericOrder(data.arr);

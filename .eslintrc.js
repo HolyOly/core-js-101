@@ -16,6 +16,9 @@ module.exports = {
     ecmaVersion: 2018,
   },
   rules: {
-    "array-callback-return": "off"
+    "array-callback-return": "off",
+    "no-nested-ternary": "off",
+    "no-restricted-syntax": "off",
+    "no-param-reassign": "off"
   },
 };

@@ -248,11 +248,16 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
-  // return arr.map((item, i) => (i === 0 ? item : item[i] + item[i - 1]));
-  // return arr.reduce((cum, item) => item += cum, []);
-  // return arr.map((item, i) => (i === 0 ? item : item[i] + item[i - 1]));
+function getMovingSum(arr) {
+  // throw new Error('Not implemented');
+  return arr.reduce((acc, item, i) => {
+    if (i === 0) {
+      acc.push(item);
+    } else {
+      acc.push(acc[i - 1] + item);
+    }
+    return acc;
+  }, []);
 }
 
 /**
@@ -286,14 +291,15 @@ function getSecondItems(arr) {
  *  [ 'a', 'b', 'c', null ] => [ 'a', 'b','b', 'c','c','c',  null,null,null,null ]
  *  [ 1,2,3,4,5 ] => [ 1, 2,2, 3,3,3, 4,4,4,4, 5,5,5,5,5 ]
  */
-function propagateItemsByPositionIndex(/* arr */) {
-  throw new Error('Not implemented');
-  // const result = [];
-  // result.push(arr[0]);
-  // return arr.map((item, i) => {
-  //   const newArr = new Array(i + 1).fill(item);
-  //   result.concat(newArr);
-  // });
+function propagateItemsByPositionIndex(arr) {
+  // throw new Error('Not implemented');
+  return arr.map((item, i) => {
+    if (i > 0) {
+      const el = (new Array(i + 1).fill(item));
+      return el;
+    }
+    return item;
+  }).flat();
 }
 
 
@@ -349,6 +355,20 @@ function getPositivesCount(arr) {
  */
 function sortDigitNamesByNumericOrder(/* arr */) {
   throw new Error('Not implemented');
+  // const eta = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+  // return arr.sort((a, b) => etalon.indexOf(a) - etalon.indexOf(b));
+  // function compareFunction(a, b) {
+  //   return etalon.indexOf(a) - etalon.indexOf(b);
+  // }
+  // return arr.sort(compareFunction);
+  // const mapped1 = {
+  //   0: 'zero', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five',
+  // 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine',
+  // };
+  // const mapped2 = {
+  //   zero: 0, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9,
+  // };
+  // return arr.map((x) => mapped2[x]).sort().map((x) => mapped1[x]);
 }
 
 /**
@@ -453,8 +473,29 @@ function toStringList(arr) {
  *      { country: 'Russia',  city: 'Saint Petersburg' }
  *    ]
  */
-function sortCitiesArray(/* arr */) {
-  throw new Error('Not implemented');
+function sortCitiesArray(arr) {
+  // throw new Error('Not implemented');
+  // eslint-disable-next-line consistent-return
+  function compareLocation(a, b) {
+    if (a.country < b.country) {
+      return -1;
+    }
+    if (a.country > b.country) {
+      return 1;
+    }
+    if (a.country === b.country) {
+      if (a.city < b.city) {
+        return -1;
+      }
+      if (a.city > b.city) {
+        return 1;
+      }
+      if (a.city === b.city) {
+        return 0;
+      }
+    }
+  }
+  return arr.sort(compareLocation);
 }
 
 /**
@@ -546,8 +587,17 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  // throw new Error('Not implemented');
+  const collection = new Map();
+  array.map((x) => {
+    if (collection.has(keySelector(x))) {
+      collection.get(keySelector(x)).push(valueSelector(x));
+    } else {
+      collection.set(keySelector(x), [valueSelector(x)]);
+    }
+  });
+  return collection;
 }
 
 
@@ -582,8 +632,10 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  // throw new Error('Not implemented');
+  // eslint-disable-next-line no-param-reassign
+  return indexes.map((item) => arr = arr[item])[indexes.length - 1];
 }
 
 

@@ -55,8 +55,13 @@ function parseDataFromIso8601(value) {
  *    Date(2012,1,1)    => true
  *    Date(2015,1,1)    => false
  */
-function isLeapYear(/* date */) {
-  throw new Error('Not implemented');
+function isLeapYear(date) {
+  // throw new Error('Not implemented');
+  const year = date.getFullYear();
+  if (new Date(year, 1, 29).getDate() === 29) {
+    return true;
+  }
+  return false;
 }
 
 
@@ -75,8 +80,9 @@ function isLeapYear(/* date */) {
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,10,0,0,250)     => "00:00:00.250"
  *    Date(2000,1,1,10,0,0),  Date(2000,1,1,15,20,10,453)   => "05:20:10.453"
  */
-function timeSpanToString(/* startDate, endDate */) {
-  throw new Error('Not implemented');
+function timeSpanToString(startDate, endDate) {
+  // throw new Error('Not implemented');
+  return new Date(endDate - startDate).toISOString().slice(11, -1);
 }
 
 
@@ -96,8 +102,17 @@ function timeSpanToString(/* startDate, endDate */) {
  *    Date.UTC(2016,3,5,18, 0) => Math.PI
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
-function angleBetweenClockHands(/* date */) {
-  throw new Error('Not implemented');
+function angleBetweenClockHands(date) {
+  // throw new Error('Not implemented');
+  const minutes = date.getUTCMinutes();
+  const hours = date.getUTCHours();
+  const angle = Math.abs(0.5 * (60 * hours - 11 * minutes));
+  let result;
+
+  if (angle > 180 && angle <= 540) result = Math.abs(360 - angle);
+  else if (angle > 540 && angle <= 900) result = Math.abs(720 - angle);
+  else result = angle;
+  return (result * Math.PI) / 180;
 }
 
 
